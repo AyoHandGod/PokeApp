@@ -1,6 +1,9 @@
 import requests
 import json
+<<<<<<< HEAD
 from jsonread import search
+=======
+>>>>>>> c994bc5b5ce0f8c4d05e4a208e448be486f9a33a
 
 """ Our base URL where we will be accessing data from"""
 BASE_URL = 'http://pokeapi.co/api/v2/pokemon/'
@@ -8,10 +11,14 @@ BASE_URL = 'http://pokeapi.co/api/v2/pokemon/'
 
 """ The Pokemon our user is searching for"""
 poke = input("Which Pokemon would you like to search?: ")
+<<<<<<< HEAD
 term = input("What data do you wish to checkout?: ")
 
 poke = poke.lower()
 term = term.lower()
+=======
+
+>>>>>>> c994bc5b5ce0f8c4d05e4a208e448be486f9a33a
 
 """ Our query function that performs the search and adds the item to our files"""
 def query_pokeapi(resource_url, pkfile):
@@ -24,6 +31,7 @@ def query_pokeapi(resource_url, pkfile):
         return json.loads(response.text)
     return None
 
+<<<<<<< HEAD
 try:
     search(poke, term)
 except:    
@@ -33,4 +41,14 @@ except:
     pokemon = query_pokeapi(poke, pokefile)
     print("Bingo!\n")
     print(pokemon[term])
+=======
+
+""" Creates a json file to hold the pokemons information """
+try:
+    pokefile = open('{0}.json'.format(poke), 'a')
+except:
+    print("Couldn't create the file. :(")
+
+pokemon = query_pokeapi(poke, pokefile)
+>>>>>>> c994bc5b5ce0f8c4d05e4a208e448be486f9a33a
 
