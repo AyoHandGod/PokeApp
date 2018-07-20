@@ -1,44 +1,53 @@
+"""
+@Author: Dante Anthony
+@Title: PokeApp
+@Version: 1.1.0
+"""
 import requests
+import sqlite3
 import json
-from jsonread import search
-
-""" Our query function that performs the search and adds the item to our files"""
-def query_pokeapi(resource_url, pkfile):
-    """ Our base URL where we will be accessing data from"""
-    base_url = 'http://pokeapi.co/api/v2/pokemon/'
-    url = '{0}{1}'.format(base_url, resource_url)
-    response = requests.get(url)
-
-    if response.status_code == 200:
-        data = json.loads(response.text)
-        json.dump(data, pkfile)
-        return json.loads(response.text)
-    return None
 
 
-# create json to hold file
-def fi_check():
-    new_file = open('{0}.json'.format(poke), 'w')
-    print("Couldn't create the file. :(")
-    return new_file
+# # Create database, table and columns
+# pokeDB = sqlite3.connect('Pokemon.db')
+# pkCursor = pokeDB.cursor()
+#
+# pkCursor.execute('''CREATE TABLE pokemon
+#                     (number integer primary key, name text)''')
+
+# Retrieval process
+# pkname = 'Charmander'
+# pkCursor.execute('SELECT * FROM pokemon WHERE name=?', (pkname,))
+# print(pkCursor.fetchone())
+
+# process for adding a row to table
+# pkCursor.execute('''INSERT INTO pokemon VALUES ('1','Charmander')''')
+
+# pokeDB.commit()
+# pokeDB.close()
 
 
-""" The Pokemon our user is searching for"""
-poke = input("Which Pokemon would you like to search?: ")
-term = input("What data do you wish to checkout?: ")
-poke = poke.lower()
-term = term.lower()
+# data capture from pokeApi
+BASE_URL = 'http://pokeapi.co/api/v2/pokemon/'
+searchPokemon = input("Pokemon name?: ").lower().strip()
 
-while True:
-    try:
-        pokefile = open('{0}.json'.format(poke), 'r')
-        search(poke, term)
-        break
+response = requests.get(BASE_URL + searchPokemon)
+jsonResponse = response.json()
 
-    except:
-        print("Grabbing data from API... ")
-        pokefile = open('{0}.json'.format(poke), 'w')
-        pokemon = query_pokeapi(poke, pokefile)
-        print("Bingo!\n")
+
+# for k, v in jsonResponse.items():
+#     print("keys: " + str(k) + " ------ " + " values: " + str(v))
+
+for k, v in jsonResponse.items():
+    if k != 'abilities':
+        print(k, v)
+
+# UP NEXT #######
+# Finish adding keys to our database table as columns for the items we want to retain
+# once we have that, we are pretty much set for this part of the backend until we config
+# GUI.
+####################################
+
+
 
 
