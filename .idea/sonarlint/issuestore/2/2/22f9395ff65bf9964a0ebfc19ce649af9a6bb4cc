@@ -1,2 +1,12 @@
 
-Ipython:S1481",Remove the unused local variable "pokefile".(·¡È«8ŒÒûè–,
+rpython:S117"TRename this parameter "idNumber" to match the regular expression ^[_a-z][a-z0-9_]*$.(¢²¹Ş8ôúĞ,
+opython:S1542A"PRename function "checkDB" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(æ·´¸8ôúĞ,
+vpython:S1542&"RRename function "baseStart" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(é»­ëùÿÿÿÿ8ôúĞ,
+python:S1170"^Rename this local variable "searchPokemon" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÂÒ£Şüÿÿÿÿ8ôúĞ,
+spython:S1174"URename this local variable "pokE" to match the regular expression ^[_a-z][a-z0-9_]*$.(€™ÀË8ôúĞ,
+€python:S1172"]Rename this local variable "jsonResponse" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ğ”»Èıÿÿÿÿ8ôúĞ,
+vpython:S117:"XRename this local variable "Session" to match the regular expression ^[_a-z][a-z0-9_]*$.(ìĞªÙ8ôúĞ,
+vpython:S1542."RRename function "pokeQuery" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Ñ´˜ïøÿÿÿÿ8ôúĞ,
+tpython:S15429"PRename function "addToDB" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(à†´€øÿÿÿÿ8ôúĞ,
+vpython:S117B"XRename this local variable "Session" to match the regular expression ^[_a-z][a-z0-9_]*$.(ìĞªÙ8ôúĞ,
+ppython:S117"RRename this parameter "baseXP" to match the regular expression ^[_a-z][a-z0-9_]*$.(¢²¹Ş8ôúĞ,
