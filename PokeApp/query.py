@@ -9,6 +9,7 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql.expression import exists
+import sqlite3
 
 # DB Table configuration
 Base = declarative_base()
@@ -69,6 +70,17 @@ def checkDB(engine, name):
     session.close()
     return result
 
+def checkDB2(db, search):
+    c = db.cursor()
+    c.execute('SELECT * FROM Pokemon WHERE name=?', (search,))
+    data = c.fetchone()
+    if data is None:
+        print("Failed to find data")
+        return False
+    else:
+        print(data[1])
+        return data
+
 # Create session and add Pokemon to DB
 # session = Session()
 # session.add(pokE)
@@ -82,18 +94,18 @@ def checkDB(engine, name):
 ####################################
 
 if __name__ == '__main__':
-
-    db = baseStart('Pokemon')
-    pokeList = open("pokemon.txt", "r")
-    pokeRead = pokeList.readlines()
-    for x in pokeRead:
-        x = x.strip().lower()
-        testDB = checkDB(db, x)
-        if not testDB:
-            pokeQuery(db, x)
-    Session = sessionmaker(bind=db)
-    session = Session()
-    for instance in session.query(Pokemon).order_by(Pokemon.id):
-        print(instance.name, instance.id)
-    session.close()
+    checkDB2('Pokemon.db', 'char')
+    # db = baseStart('Pokemon')
+    # pokeList = open("pokemon.txt", "r")
+    # pokeRead = pokeList.readlines()
+    # for x in pokeRead:
+    #     x = x.strip().lower()
+    #     testDB = checkDB(db, x)
+    #     if not testDB:
+    #         pokeQuery(db, x)
+    # Session = sessionmaker(bind=db)
+    # session = Session()
+    # for instance in session.query(Pokemon).order_by(Pokemon.id):
+    #     print(instance.name, instance.id)
+    # session.close()
 
