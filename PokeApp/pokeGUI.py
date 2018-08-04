@@ -2,14 +2,16 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import query
 import sqlite3
+from PIL import Image
+import requests
+
 
 
 class App(tk.Frame):
     def __init__(self, master):
         ttk.Frame.__init__(self, master)
         master.title("Pokebase")
-        master.resizable(False, False)
-        master.configure(background="#efefef")
+        master.configure(background="#efefef", height=60, width=40)
         self.dataBase = query.baseStart("Pokemon")
         self._createWidgets()
         #master.bind('<Return>', self.calculate)
@@ -26,7 +28,8 @@ class App(tk.Frame):
         self.base_experience = tk.IntVar()
         self.weight = tk.IntVar()
         self.height = tk.IntVar()
-        #self.image = sprite_url
+        self.imageUrl = tk.StringVar()
+        self.gif = None
 
         ttk.Label(mainframe, text="Name: ").grid(column=0, row=0, sticky='w')
         ttk.Label(mainframe, textvariable=self.name).grid(column=1, row=0, sticky='nw', rowspan=1, padx=5)
@@ -43,6 +46,10 @@ class App(tk.Frame):
         ttk.Label(mainframe, text="Height: ").grid(column=0, row=4, sticky='w')
         ttk.Label(mainframe, textvariable=self.height).grid(column=1, row=4, sticky='nw', rowspan=1, padx=5)
 
+        c = tk.Canvas(mainframe, relief='raised', width=20, height=20)
+        c.grid(row=0, column=3, rowspan=4, columnspan=2)
+        c.create_image(20, 20, self.gif, anchor='nw')
+
         sub_frame = ttk.Frame(self.master, padding="3 3 12 12")
         sub_frame.pack(expand=True)
 
@@ -55,17 +62,25 @@ class App(tk.Frame):
         data = query.checkDB2(conn, self.pokemon.get())
         if data is False:
             query.pokeQuery(self.dataBase, self.pokemon.get())
+            self.checkDatabase()
         else:
             self.name.set(data[1])
             self.id.set(data[0])
             self.base_experience.set(data[2])
             self.weight.set(data[3])
             self.height.set(data[4])
+            self.imageUrl.set(data[5])
+            self.imageGrab()
 
 
     def configureDB(self):
         conn = sqlite3.connect("Pokemon.db")
         return conn
+
+    def imageGrab(self):
+        im = Image.open(requests.get("https://" + self.imageUrl.get(), stream=True).raw)
+        self.gif.set(tk.PhotoImage(im))
+        return self.gif
 
 
 if __name__ == '__main__':

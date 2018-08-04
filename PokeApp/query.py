@@ -9,7 +9,8 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql.expression import exists
-import sqlite3
+from PIL import Image
+
 
 # DB Table configuration
 Base = declarative_base()
