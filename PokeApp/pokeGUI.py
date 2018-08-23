@@ -1,8 +1,13 @@
+"""
+@Author: Dante Anthony
+@Title: PokeApp
+@Version: 1.1.0
+"""
 import tkinter as tk
 from tkinter import ttk, messagebox
 import query
 import sqlite3
-from PIL import Image
+from PIL import Image, ImageTk
 import requests
 
 
@@ -29,7 +34,7 @@ class App(tk.Frame):
         self.weight = tk.IntVar()
         self.height = tk.IntVar()
         self.imageUrl = tk.StringVar()
-        self.gif = None
+        self.gif = tk.PhotoImage()
 
         ttk.Label(mainframe, text="Name: ").grid(column=0, row=0, sticky='w')
         ttk.Label(mainframe, textvariable=self.name).grid(column=1, row=0, sticky='nw', rowspan=1, padx=5)
@@ -46,9 +51,9 @@ class App(tk.Frame):
         ttk.Label(mainframe, text="Height: ").grid(column=0, row=4, sticky='w')
         ttk.Label(mainframe, textvariable=self.height).grid(column=1, row=4, sticky='nw', rowspan=1, padx=5)
 
-        c = tk.Canvas(mainframe, relief='raised', width=20, height=20)
-        c.grid(row=0, column=3, rowspan=4, columnspan=2)
-        c.create_image(20, 20, self.gif, anchor='nw')
+        self.c = tk.Canvas(mainframe, relief='raised', width=20, height=20)
+        self.c.grid(row=0, column=3, rowspan=4, columnspan=2)
+        self.c.create_image(20, 20, image=self.gif, anchor='nw')
 
         sub_frame = ttk.Frame(self.master, padding="3 3 12 12")
         sub_frame.pack(expand=True)
@@ -70,16 +75,16 @@ class App(tk.Frame):
             self.weight.set(data[3])
             self.height.set(data[4])
             self.imageUrl.set(data[5])
-            self.imageGrab()
-
+            self.gif = self.imageGrab()
+            self.c.create_image(20, 20, image=self.gif, anchor='nw')
 
     def configureDB(self):
         conn = sqlite3.connect("Pokemon.db")
         return conn
 
     def imageGrab(self):
-        im = Image.open(requests.get("https://" + self.imageUrl.get(), stream=True).raw)
-        self.gif.set(tk.PhotoImage(im))
+        im = Image.open(requests.get(self.imageUrl.get(), stream=True).raw)
+        self.gif = ImageTk.PhotoImage(im)
         return self.gif
 
 

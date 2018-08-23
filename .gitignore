@@ -11,4 +11,5 @@ PokeApp/Mew.json
 PokeApp/Meowth.json
 PokeApp/bulbasaur.json
 PokeApp/squirtle.json
-PokeApp/*.json
+PokeApp/*.json.idea/*
+.idea/sonarlint/issuesstore/2/2/22f9395ff65bf9964a0ebfc19ce649af9a6bb4c
