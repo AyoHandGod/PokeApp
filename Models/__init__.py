@@ -1,0 +1,1 @@
+from Models.query import pokeQuery
