@@ -8,7 +8,7 @@ from sqlalchemy.sql.expression import exists
 # DB Table configuration
 BASE = declarative_base()
 
-
+@dataclass
 class Pokemon(BASE):
     __tablename__ = 'pokemon'
 
