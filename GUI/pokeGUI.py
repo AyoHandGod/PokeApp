@@ -9,6 +9,8 @@ import sqlite3
 from PIL import Image, ImageTk
 import requests
 
+from Models import query
+
 
 
 class App(tk.Frame):
@@ -16,15 +18,6 @@ class App(tk.Frame):
         ttk.Frame.__init__(self, master)
         master.title("Pokebase")
         master.configure(background="#efefef", height=60, width=40)
-        self.dataBase = query.baseStart("Pokemon")
-        self._createWidgets()
-        #master.bind('<Return>', self.calculate)
-
-    def _createWidgets(self):
-        # main frame
-        mainframe = ttk.Frame(self.master)
-        mainframe.pack(anchor='w', expand=True)
-
         # Variables
         self.search = tk.StringVar()
         self.id = tk.IntVar()
@@ -34,6 +27,13 @@ class App(tk.Frame):
         self.height = tk.IntVar()
         self.imageUrl = tk.StringVar()
         self.gif = tk.PhotoImage()
+        self.dataBase = query.create_database("Pokemon")
+        self._create_widgets()
+
+    def _create_widgets(self):
+        # main frame
+        mainframe = ttk.Frame(self.master)
+        mainframe.pack(anchor='w', expand=True)
 
         ttk.Label(mainframe, text="Name: ").grid(column=0, row=0, sticky='w')
         ttk.Label(mainframe, textvariable=self.name).grid(column=1, row=0, sticky='nw', rowspan=1, padx=5)
