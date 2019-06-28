@@ -32,9 +32,15 @@ def pokeQuery(engine, pokemon):
     addToDB(engine, pokE)
 
 
-def addToDB(engine, pokemon):
-    Session = sessionmaker(bind=engine)
-    session = Session()
+def add_to_db(engine: Engine, pokemon: Pokemon) -> None:
+    """
+    Args:
+        engine (str):
+        pokemon (Pokemon):
+    """
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+
     session.add(pokemon)
     session.commit()
     session.close()
