@@ -1,9 +1,10 @@
 """
 @Author: Dante Anthony
-@Title: PokeApp
-@Version: 0.1.1
+@Title: PokeApp.Models.query
+@Version: 0.1.4
 """
 import requests
+from typing import List
 
 
 # create database function
@@ -21,11 +22,12 @@ def pokeQuery(engine, pokemon):
     response = requests.get(BASE_URL + searchPokemon)
     jsonResponse = response.json()
     # create pokemon object
-    pokemon = Pokemon(id=api_response_json['id'], _name=api_response_json['name'],
-                      _base_xp=api_response_json['base_experience'],
-                      _weight=api_response_json['weight'], _height=api_response_json['height'],
-                      _iamge=api_response_json['sprites']['front_default'])
+    pokemon = Pokemon(id=api_response_json['id'], name=api_response_json['name'],
+                      base_xp=api_response_json['base_experience'],
+                      weight=api_response_json['weight'], height=api_response_json['height'],
+                      image=api_response_json['sprites']['front_default'])
     return pokemon
+
 
 
 def checkDB(engine, name):
