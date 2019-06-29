@@ -4,12 +4,6 @@
 @Version: 0.1.1
 """
 import requests
-from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.sql.expression import exists
-from PIL import Image
 
 
 # create database function
@@ -27,23 +21,11 @@ def pokeQuery(engine, pokemon):
     response = requests.get(BASE_URL + searchPokemon)
     jsonResponse = response.json()
     # create pokemon object
-    pokE = Pokemon(jsonResponse['id'], jsonResponse['name'], jsonResponse['base_experience'], jsonResponse['weight'],
-               jsonResponse['height'], jsonResponse['sprites']['front_default'])
-    addToDB(engine, pokE)
-
-
-def add_to_db(engine: Engine, pokemon: Pokemon) -> None:
-    """
-    Args:
-        engine (str):
-        pokemon (Pokemon):
-    """
-    DBSession = sessionmaker(bind=engine)
-    session = DBSession()
-
-    session.add(pokemon)
-    session.commit()
-    session.close()
+    pokemon = Pokemon(id=api_response_json['id'], _name=api_response_json['name'],
+                      _base_xp=api_response_json['base_experience'],
+                      _weight=api_response_json['weight'], _height=api_response_json['height'],
+                      _iamge=api_response_json['sprites']['front_default'])
+    return pokemon
 
 
 def checkDB(engine, name):

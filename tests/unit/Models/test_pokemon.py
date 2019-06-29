@@ -1,11 +1,8 @@
 import unittest
 from unittest import TestCase
 
-from sqlalchemy.engine import Engine
-
-from Models import create_database
 from Models import Pokemon
-from Models import query
+from Models.DatabaseManager import DatabaseManager
 
 
 class TestPokemon(TestCase):
@@ -14,18 +11,16 @@ class TestPokemon(TestCase):
         self.pokemon = Pokemon(id=2999, name="Test Mon", base_xp=3000, weight=4, height=6, image="No image")
         self.assertTrue(isinstance(self.pokemon, Pokemon), "Invalid pokemon object")
 
-    def test_can_create_database(self):
-        self.database_engine = create_database("test")
-        self.assertTrue(isinstance(self.database_engine, Engine), "Database engine created")
 
-    def test_can_store_pokemon_in_database(self):
-        self.database_engine = create_database("test")
-        self.pokemon = Pokemon(id=2999, name="Test Mon", base_xp=3000, weight=4, height=6, image="No image")
-        try:
-            query.add_to_db(self.database_engine, self.pokemon)
-        except Exception as e:
-            print("Database add failed due to: " + str(e))
+class TestDatabaseManager(unittest.TestCase):
 
-    def test_can_query_database_for_pokemon_name(self):
-        self.database_engine = create_database("test")
-        self.assertTrue(query.query_database(self.database_engine, "Test Mon"))
+    def setUp(self) -> None:
+        self.db_manager = DatabaseManager(database_name="test2")
+
+    def test_can_connect_to_database(self):
+        self.assertTrue(self.db_manager.query_database("Test Mon"))
+
+    def test_can_add_to_database(self):
+        test_pokemon = Pokemon(id=3000, name="Test Mon2", base_xp=3000, weight=4, height=6)
+        self.db_manager.add_to_db(test_pokemon)
+        self.assertTrue(self.db_manager.query_database("Test Mon2"))
