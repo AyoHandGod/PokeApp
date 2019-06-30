@@ -66,7 +66,6 @@ class DatabaseManager:
         session.close()
         return found_pokemon_bool
 
-    # TODO refactor with better OOP principles
     def fill_database_with_pokemon(self):
         pokemon_results = query.grab_all_pokemon_from_api()
         for pokemon in pokemon_results:
