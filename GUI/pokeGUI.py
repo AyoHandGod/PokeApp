@@ -28,8 +28,8 @@ class App(tk.Frame):
         self.base_experience = tk.IntVar()
         self.weight = tk.IntVar()
         self.height = tk.IntVar()
-        self.imageUrl = tk.StringVar()
-        self.gif = tk.PhotoImage()
+        self.image_url = ""
+        self.gif = Image.open('pokeimage.png')
 
         # DB Manager
         self.database_manager = DatabaseManager(database_name="test2")
@@ -39,33 +39,29 @@ class App(tk.Frame):
 
     def _create_widgets(self):
         # main frame
-        mainframe = ttk.Frame(self.master)
-        mainframe.pack(anchor='w', expand=True)
+        self.mainframe = ttk.Frame(self.master)
+        self.mainframe.pack(anchor='w', expand=True)
 
         # Name Row
-        ttk.Label(mainframe, text="Name: ").grid(column=0, row=0, sticky='w')
-        ttk.Label(mainframe, textvariable=self.name).grid(column=1, row=0, sticky='nw', rowspan=1, padx=5)
+        ttk.Label(self.mainframe, text="Name: ").grid(column=0, row=0, sticky='w')
+        ttk.Label(self.mainframe, textvariable=self.name).grid(column=1, row=0, sticky='nw', rowspan=1, padx=5)
 
         # ID Row
-        ttk.Label(mainframe, text="ID: ").grid(column=0, row=1, sticky='w')
-        ttk.Label(mainframe, textvariable=self.id).grid(column=1, row=1, sticky='nw', rowspan=1, padx=5)
+        ttk.Label(self.mainframe, text="ID: ").grid(column=0, row=1, sticky='w')
+        ttk.Label(self.mainframe, textvariable=self.id).grid(column=1, row=1, sticky='nw', rowspan=1, padx=5)
 
         # XP Row
-        ttk.Label(mainframe, text="Base Experience: ").grid(column=0, row=2, sticky='w')
-        ttk.Label(mainframe, textvariable=self.base_experience).grid(column=1, row=2, sticky='nw', rowspan=1, padx=5)
+        ttk.Label(self.mainframe, text="Base Experience: ").grid(column=0, row=2, sticky='w')
+        ttk.Label(self.mainframe, textvariable=self.base_experience).grid(column=1, row=2, sticky='nw', rowspan=1,
+                                                                          padx=5)
 
         # Weight Row
-        ttk.Label(mainframe, text="Weight: ").grid(column=0, row=3, sticky='w')
-        ttk.Label(mainframe, textvariable=self.weight).grid(column=1, row=3, sticky='nw', rowspan=1, padx=5)
+        ttk.Label(self.mainframe, text="Weight: ").grid(column=0, row=3, sticky='w')
+        ttk.Label(self.mainframe, textvariable=self.weight).grid(column=1, row=3, sticky='nw', rowspan=1, padx=5)
 
         # Height Row
-        ttk.Label(mainframe, text="Height: ").grid(column=0, row=4, sticky='w')
-        ttk.Label(mainframe, textvariable=self.height).grid(column=1, row=4, sticky='nw', rowspan=1, padx=5)
-
-        # Image Section
-        self.c = tk.Canvas(mainframe, relief='raised', width=20, height=20)
-        self.c.grid(row=0, column=3, rowspan=4, columnspan=2)
-        self.c.create_image(20, 20, image=self.gif, anchor='nw')
+        ttk.Label(self.mainframe, text="Height: ").grid(column=0, row=4, sticky='w')
+        ttk.Label(self.mainframe, textvariable=self.height).grid(column=1, row=4, sticky='nw', rowspan=1, padx=5)
 
         # Search Frame - Beneath
         sub_frame = ttk.Frame(self.master, padding="3 3 12 12")
@@ -76,30 +72,16 @@ class App(tk.Frame):
         ttk.Button(sub_frame, text="Search", command=self.get_pokemon_details_from_database) \
             .grid(column=3, row=0, sticky=('e', 'w', 'n', 's'))
 
-    def checkDatabase(self):
-        conn = self.configureDB()
-        data = query.checkDB2(conn, self.pokemon.get())
-        if data is False:
-            query.pokeQuery(self.dataBase, self.pokemon.get())
-            self.checkDatabase()
-        else:
-            self.name.set(data[1])
-            self.id.set(data[0])
-            self.base_experience.set(data[2])
-            self.weight.set(data[3])
-            self.height.set(data[4])
-            self.imageUrl.set(data[5])
-            self.gif = self.imageGrab()
-            self.c.create_image(20, 20, image=self.gif, anchor='nw')
+    def image_grab(self):
 
-    def configureDB(self):
-        conn = sqlite3.connect("Pokemon.db")
-        return conn
+        image_response = requests.get(self.image_url)
+        self.gif = Image.open(BytesIO(image_response.content))
 
-    def imageGrab(self):
-        im = Image.open(requests.get(self.imageUrl.get(), stream=True).raw)
-        self.gif = ImageTk.PhotoImage(im)
-        return self.gif
+        # Image Section
+        tkpic = ImageTk.PhotoImage(self.gif)
+        img = ttk.Label(self.mainframe, image=tkpic)
+        img.image = tkpic
+        img.grid(column=2, row=0, rowspan=4)
 
     def get_pokemon_details_from_database(self):
         if self.database_manager.check_if_database_has(str(self.pokemon_name)) is False:
@@ -111,12 +93,13 @@ class App(tk.Frame):
             session = self.database_manager._sessionmaker()
             pokemon = session.query(Pokemon).filter(Pokemon.name == self.pokemon_name.get()).scalar()
             print(pokemon)
-            self.name.set(pokemon.name)
+            self.name.set(pokemon.name.title())
             self.id.set(pokemon.id)
             self.base_experience.set(pokemon.base_xp)
             self.weight.set(pokemon.weight)
             self.height.set(pokemon.height)
-            self.imageUrl.set(pokemon.sprite_url)
+            self.image_url = pokemon.image
+            self.image_grab()
         except AttributeError as e:
             messagebox.showerror("Error", e)
 
