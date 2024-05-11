@@ -3,8 +3,11 @@
 @Title: PokeApp.Models.DatabaseManager
 @Version: 0.1.4
 """
+import datetime
 import logging
 
+import sqlalchemy
+from sqlalchemy import inspect
 from sqlalchemy.engine import Engine
 from sqlalchemy.engine import create_engine
 from sqlalchemy.orm import sessionmaker, Query
@@ -29,6 +32,7 @@ class DatabaseManager:
         self._database_name = database_name
         self._engine = self._connect_to_database()
         self._sessionmaker = sessionmaker(bind=self._engine)
+        logger.log(logging.INFO, str(datetime.datetime.now()) + " Creating Database Manager")
 
     def _connect_to_database(self) -> Engine:
         """
@@ -36,9 +40,10 @@ class DatabaseManager:
         :return: SqlAlchemy Engine
         """
         database_engine = create_engine(self._database_system + ':///' + self._database_name + '.db', echo=True)
-        if not database_engine.dialect.has_table(database_engine, Pokemon.__tablename__):
+        if not inspect(database_engine).has_table(Pokemon.__tablename__):
             BASE.metadata.create_all(database_engine)
-        logger.log(logging.INFO, "Database connection established. System: {}, DB_NAME: {}"
+        logger.log(logging.INFO, str(datetime.datetime.now()) + "Database connection established. "
+                                                                "System: {}, DB_NAME: {}"
                    .format(self._database_system, self._database_name))
         return database_engine
 
@@ -62,7 +67,12 @@ class DatabaseManager:
         :return: boolean result of query
         """
         session = self._sessionmaker()
-        found_pokemon_bool = session.query(exists().where(Pokemon.name == name))
+        found_pokemon_bool = session.query(session.query(Pokemon).filter(Pokemon.name == name).exists()).scalar()
+        stmt = sqlalchemy.text('SELECT * FROM Pokemon where name = ' + '"' + name + '"')
+        result = session.execute(stmt)
+        print(result)
+        print(found_pokemon_bool)
+        print(type(found_pokemon_bool))
         session.close()
         return found_pokemon_bool
 
@@ -70,4 +80,5 @@ class DatabaseManager:
         pokemon_results = query.grab_all_pokemon_from_api()
         for pokemon in pokemon_results:
             self.add_to_db(pokemon)
+
 

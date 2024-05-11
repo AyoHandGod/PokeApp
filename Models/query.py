@@ -6,6 +6,8 @@
 import requests
 from typing import List
 
+import Models
+
 
 # create database function
 def baseStart(name):
@@ -16,18 +18,18 @@ def baseStart(name):
 
 
 # data capture from pokeApi
-def pokeQuery(engine, pokemon):
+def pokeQuery(pokemon: str):
     BASE_URL = 'http://pokeapi.co/api/v2/pokemon/'
     searchPokemon = pokemon.lower().strip()
     response = requests.get(BASE_URL + searchPokemon)
     jsonResponse = response.json()
+    print(jsonResponse["abilities"][0]['ability']['name'])
     # create pokemon object
-    pokemon = Pokemon(id=api_response_json['id'], name=api_response_json['name'],
-                      base_xp=api_response_json['base_experience'],
-                      weight=api_response_json['weight'], height=api_response_json['height'],
-                      image=api_response_json['sprites']['front_default'])
+    pokemon = Models.Pokemon(id=jsonResponse['id'], name=jsonResponse['name'],
+                      base_xp=jsonResponse['base_experience'],
+                      weight=jsonResponse['weight'], height=jsonResponse['height'],
+                      image=jsonResponse['sprites']['front_default'])
     return pokemon
-
 
 
 def checkDB(engine, name):
@@ -36,6 +38,7 @@ def checkDB(engine, name):
     result = session.query(exists().where(Pokemon.name == name)).scalar()
     session.close()
     return result
+
 
 def checkDB2(db, search):
     c = db.cursor()
@@ -59,6 +62,7 @@ def checkDB2(db, search):
 # once we have that, we are pretty much set for this part of the backend until we config
 # GUI.
 ####################################
+
 
 if __name__ == '__main__':
     checkDB2('Pokemon.db', 'char')

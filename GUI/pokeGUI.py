@@ -11,8 +11,7 @@ from PIL import Image, ImageTk
 import requests
 
 from Models.DatabaseManager import DatabaseManager
-from Models import query_pokemon_api_for_pokemon_named, Pokemon
-
+from Models import pokeQuery, Pokemon
 
 
 class App(tk.Frame):
@@ -84,8 +83,10 @@ class App(tk.Frame):
         img.grid(column=2, row=0, rowspan=4)
 
     def get_pokemon_details_from_database(self):
-        if self.database_manager.check_if_database_has(str(self.pokemon_name)) is False:
-            new_pokemon = query_pokemon_api_for_pokemon_named(str(self.pokemon_name))
+        target_pokemon = self.pokemon_name.get()
+        if self.database_manager.check_if_database_has(str(target_pokemon)) is False:
+            print("executed")
+            new_pokemon = pokeQuery(str(target_pokemon))
             self.database_manager.add_to_db(new_pokemon)
 
         # search db for pokemon, if failed presents popup message
