@@ -19,6 +19,7 @@ class TestDatabaseManager(unittest.TestCase):
         self.db_manager = DatabaseManager(database_name="test2")
 
     def test_can_connect_to_database(self):
+        self.db_manager = DatabaseManager(database_name="test2")
         self.assertTrue(self.db_manager.check_if_database_has("Test Mon"))
 
     def test_can_add_to_database(self):
@@ -33,7 +34,7 @@ class TestDatabaseManager(unittest.TestCase):
 
 class TestApiFunctionality(unittest.TestCase):
     def test_can_find_pokemon_by_name(self):
-        pokemon = query.query_pokemon_api_for_pokemon_named("charmander")
+        pokemon = query.pokeQuery("charmander")
         self.assertTrue(str(pokemon.name).lower() == "charmander")
 
     def test_can_grab_all_pokemon_from_api(self):
