@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2eb71b4c-6ea5-46d8-8ac3-ffb340bc6069" name="Default" comment="Made a lot of changes, started from scratch. Configuring DB and search.">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/PokeApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PokeApp.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="2eb71b4c-6ea5-46d8-8ac3-ffb340bc6069" name="Default" comment="Patched the search functionality and stabilized the database check before accessing remote API. &#10;&#10;# Note: Need to use get() method on the tkinter entry field in order to get the string value instead of a class. This was causing everything to fail&#10;&#10;TODO: Remove the test print statements in DatabaseManager.py and pokeGUI.py">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI/pokeGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/pokeGUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/DatabaseManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DatabaseManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/query.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/query.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/Models/test_pokemon.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unit/Models/test_pokemon.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +35,11 @@
     </findStrings>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
@@ -117,7 +115,7 @@
       <recent name="$PROJECT_DIR$/PokeApp" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests for test_pokemon.TestApiFunctionality.test_can_find_pokemon_by_name">
+  <component name="RunManager" selected="Python.pokeGUI">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
@@ -289,10 +287,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.pokeGUI" />
         <item itemvalue="Python tests.Python tests for test_pokemon.TestApiFunctionality.test_can_find_pokemon_by_name" />
         <item itemvalue="Python tests.Python tests for test_pokemon.TestDatabaseManager" />
         <item itemvalue="Python tests.Python tests for test_pokemon.TestPokemon" />
-        <item itemvalue="Python.pokeGUI" />
         <item itemvalue="Python tests.Python tests for test_pokemon.TestDatabaseManager.test_can_add_to_database" />
       </list>
     </recent_temporary>
@@ -320,6 +318,11 @@
       <workItem from="1715393086730" duration="4320000" />
       <workItem from="1715397987998" duration="992000" />
       <workItem from="1715400509509" duration="3799000" />
+      <workItem from="1715405351606" duration="434000" />
+      <workItem from="1715449157419" duration="1798000" />
+      <workItem from="1715483642006" duration="1747000" />
+      <workItem from="1716354067421" duration="77000" />
+      <workItem from="1716597330073" duration="52000" />
     </task>
     <task id="LOCAL-00001" summary="Made a lot of changes, started from scratch. Configuring DB and search.">
       <created>1532060104505</created>
@@ -328,7 +331,14 @@
       <option name="project" value="LOCAL" />
       <updated>1532060104505</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Patched the search functionality and stabilized the database check before accessing remote API. &#10;&#10;# Note: Need to use get() method on the tkinter entry field in order to get the string value instead of a class. This was causing everything to fail&#10;&#10;TODO: Remove the test print statements in DatabaseManager.py and pokeGUI.py">
+      <created>1715405588004</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1715405588004</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -425,7 +435,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Made a lot of changes, started from scratch. Configuring DB and search." />
-    <option name="LAST_COMMIT_MESSAGE" value="Made a lot of changes, started from scratch. Configuring DB and search." />
+    <MESSAGE value="Patched the search functionality and stabilized the database check before accessing remote API. &#10;&#10;# Note: Need to use get() method on the tkinter entry field in order to get the string value instead of a class. This was causing everything to fail&#10;&#10;TODO: Remove the test print statements in DatabaseManager.py and pokeGUI.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patched the search functionality and stabilized the database check before accessing remote API. &#10;&#10;# Note: Need to use get() method on the tkinter entry field in order to get the string value instead of a class. This was causing everything to fail&#10;&#10;TODO: Remove the test print statements in DatabaseManager.py and pokeGUI.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -461,10 +472,10 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/PokeApp$pokeGUI.coverage" NAME="pokeGUI Coverage Results" MODIFIED="1715404195393" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GUI" />
+    <SUITE FILE_PATH="coverage/PokeApp$pokeGUI.coverage" NAME="pokeGUI Coverage Results" MODIFIED="1716597340493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GUI" />
     <SUITE FILE_PATH="coverage/PokeApp$jsonread.coverage" NAME="jsonread Coverage Results" MODIFIED="1693096920497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PokeApp$pokeGUI__1_.coverage" NAME="pokeGUI (1) Coverage Results" MODIFIED="1715397383340" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GUI" />
-    <SUITE FILE_PATH="coverage/PokeApp$.coverage" NAME=" Coverage Results" MODIFIED="1715401531037" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests/unit/Models" />
+    <SUITE FILE_PATH="coverage/PokeApp$.coverage" NAME=" Coverage Results" MODIFIED="1715464697053" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests/unit/Models" />
     <SUITE FILE_PATH="coverage/PokeApp$query__2_.coverage" NAME="query (2) Coverage Results" MODIFIED="1693099648552" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Models" />
   </component>
   <component name="editorHistoryManager">
