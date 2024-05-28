@@ -36,7 +36,7 @@ class DatabaseManager:
         :return: SqlAlchemy Engine
         """
         database_engine = create_engine(self._database_system + ':///' + self._database_name + '.db', echo=True)
-        if not database_engine.dialect.has_table(database_engine, Pokemon.__tablename__):
+        if not database_engine.dialect.has_table(database_engine.connect(), Pokemon.__tablename__):
             BASE.metadata.create_all(database_engine)
         logger.log(logging.INFO, "Database connection established. System: {}, DB_NAME: {}"
                    .format(self._database_system, self._database_name))

@@ -9,9 +9,11 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import requests
+from PIL import Image, ImageTk
+
 
 from Models.DatabaseManager import DatabaseManager
-from Models import query_pokemon_api_for_pokemon_named, Pokemon
+from Models import pokeQuery, Pokemon
 
 
 
@@ -85,7 +87,7 @@ class App(tk.Frame):
 
     def get_pokemon_details_from_database(self):
         if self.database_manager.check_if_database_has(str(self.pokemon_name)) is False:
-            new_pokemon = query_pokemon_api_for_pokemon_named(str(self.pokemon_name))
+            new_pokemon = pokeQuery(str(self.pokemon_name))
             self.database_manager.add_to_db(new_pokemon)
 
         # search db for pokemon, if failed presents popup message
