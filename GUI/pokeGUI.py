@@ -18,7 +18,7 @@ class App(tk.Frame):
     def __init__(self, master):
         ttk.Frame.__init__(self, master)
         master.title("Pokebase")
-        master.configure(background="#efefef", height=60, width=60)
+        master.configure(background="#efefef", height=60, width=60, highlightbackground="blue", highlightthickness=1)
 
         # Pokemon Details
         self.search = tk.StringVar()
@@ -42,34 +42,34 @@ class App(tk.Frame):
         self.mainframe.pack(anchor='w', expand=True)
 
         # Name Row
-        ttk.Label(self.mainframe, text="Name: ").grid(column=0, row=0, sticky='w')
-        ttk.Label(self.mainframe, textvariable=self.name).grid(column=1, row=0, sticky='nw', rowspan=1, padx=5)
+        ttk.Label(self.mainframe, text="Name: ").grid(column=0, row=0, sticky='NSEW')
+        ttk.Label(self.mainframe, textvariable=self.name).grid(column=1, row=0, sticky='NSEW', padx=5)
 
         # ID Row
-        ttk.Label(self.mainframe, text="ID: ").grid(column=0, row=1, sticky='w')
-        ttk.Label(self.mainframe, textvariable=self.id).grid(column=1, row=1, sticky='nw', rowspan=1, padx=5)
+        ttk.Label(self.mainframe, text="ID: ").grid(column=0, row=1, sticky='NSEW')
+        ttk.Label(self.mainframe, textvariable=self.id).grid(column=1, row=1, sticky='NSEW', padx=5)
 
         # XP Row
-        ttk.Label(self.mainframe, text="Base Experience: ").grid(column=0, row=2, sticky='w')
-        ttk.Label(self.mainframe, textvariable=self.base_experience).grid(column=1, row=2, sticky='nw', rowspan=1,
+        ttk.Label(self.mainframe, text="Base Experience: ").grid(column=0, row=2, sticky='NSEW')
+        ttk.Label(self.mainframe, textvariable=self.base_experience).grid(column=1, row=2, sticky='NSEW',
                                                                           padx=5)
 
         # Weight Row
-        ttk.Label(self.mainframe, text="Weight: ").grid(column=0, row=3, sticky='w')
-        ttk.Label(self.mainframe, textvariable=self.weight).grid(column=1, row=3, sticky='nw', rowspan=1, padx=5)
+        ttk.Label(self.mainframe, text="Weight: ").grid(column=0, row=3, sticky='NSEW')
+        ttk.Label(self.mainframe, textvariable=self.weight).grid(column=1, row=3, sticky='NSEW', padx=5)
 
         # Height Row
-        ttk.Label(self.mainframe, text="Height: ").grid(column=0, row=4, sticky='w')
-        ttk.Label(self.mainframe, textvariable=self.height).grid(column=1, row=4, sticky='nw', rowspan=1, padx=5)
+        ttk.Label(self.mainframe, text="Height: ").grid(column=0, row=4, sticky='NSEW')
+        ttk.Label(self.mainframe, textvariable=self.height).grid(column=1, row=4, sticky='NSEW', padx=5)
 
         # Search Frame - Beneath
         sub_frame = ttk.Frame(self.master, padding="3 3 12 12")
         sub_frame.pack(expand=True)
 
         self.pokemon_name = ttk.Entry(sub_frame, textvariable=self.search)
-        self.pokemon_name.grid(column=1, row=0, sticky='w')
+        self.pokemon_name.grid(column=1, row=0, sticky='NSEW')
         ttk.Button(sub_frame, text="Search", command=self.get_pokemon_details_from_database) \
-            .grid(column=3, row=0, sticky=('e', 'w', 'n', 's'))
+            .grid(column=3, row=0, sticky='NSEW')
 
     def image_grab(self):
 
